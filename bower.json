@@ -1,0 +1,22 @@
+{
+  "name": "calendar",
+  "description": "Gulp builder for calendar period app",
+  "main": "index.html",
+  "authors": [
+    "GagarinAP"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Gulp"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "jquery": "^3.0.0"
+  }
+}
