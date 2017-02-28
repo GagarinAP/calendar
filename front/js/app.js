@@ -5,7 +5,7 @@ var app = angular.module("app", [
 ]);
 
 app.controller("appCtrl", function($scope){
-  $scope.name = 'John';
+  $scope.name = 'Calendar Period';
 });
 
 app.controller('DatepickerDemoCtrl', function ($scope) {
