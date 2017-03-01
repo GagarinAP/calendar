@@ -1,5 +1,5 @@
 # Calendar
-Calendar periods
+Calendar periods [![Build Status](https://travis-ci.org/GagarinAP/calendar.svg?branch=master)](https://travis-ci.org/GagarinAP/calendar)
 
 ## How to:
 1. npm i && bower i
