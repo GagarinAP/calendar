@@ -1,59 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
 <head>
+  <base href="/">
   <meta charset="UTF-8">
   <title>Calendar</title>
   <link rel="stylesheet" href="css/vendor.css">
-  
-  <style>
-    .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
-    .full button span {
-      background-color: limegreen;
-      border-radius: 32px;
-      color: black;
-    }
-    .partially button span {
-      background-color: orange;
-      border-radius: 32px;
-      color: black;
-    }
-    .well{
-      width: 1140px;
-      height: 600px;
-    }
-    table{
-      width: 100%;
-    }
-    .uib-day button, .uib-month button, .uib-year button{
-      height: 85px;
-    }
-  </style>
 </head>
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="text-center" ng-controller="appCtrl"><h1>{{name}}</h1></div>
-      </div>
-      <div class="col-lg-12">  
-        <div ng-controller="DatepickerDemoCtrl">
-          <pre class="text-center">Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
-
-            <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>            
-            <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-            <label>Number:</label>
-            <input type="number" name="input" ng-model="period.value"/>
-            <label>Date:</label>
-            <input type="date" id="exampleInput" name="input" ng-model="period.date"/>            
-            <hr />
-            <div style="display:inline-block; min-height:290px;">
-              <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
+<body ng-controller="appCtrl">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Start Bootstrap</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/about">About</a>
+                    </li>
+                    <li>
+                        <a href="/services">Services</a>
+                    </li>
+                    <li>
+                        <a href="/contact">Contact</a>
+                    </li>
+                </ul>
             </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </nav>
 
+    <div class="container" style="padding-top:100px;">
+        <ng-view></ng-view>
+    </div>
+
+    <div class="container">
+        <hr>
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+    </div>
   <script src="js/vendor.js"></script>
   <script src="js/bundle.js"></script>
 </body>

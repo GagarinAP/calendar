@@ -4,54 +4,76 @@ var app = angular.module("app", [
   "ngResource"
 ]);
 
-app.controller("appCtrl", function($scope){
-  $scope.name = 'Calendar Period';
-});
+app.config(["$routeProvider","$locationProvider", function($routeProvider,$locationProvider){
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
+  $routeProvider
+    .when('/',{
+      templateUrl:'main.html',
+      controller: 'appCtrl'
+    })
+    .when('/about',{
+      templateUrl:'about.html',
+      controller: 'aboutCtrl'
+    })
+    .when('/services',{
+      templateUrl:'services.html',
+      controller: 'servicesCtrl'
+    })
+    .when('/contact',{
+      templateUrl:'contact.html',
+      controller: 'contactCtrl'
+    })
+    .when('/phones/:phoneId',{
+      templateUrl:'phone-template.html',
+      controller: 'phoneCtrl'
+    })
+    .otherwise({
+      redirectTo: '/'
+    })
+}]);
 
-app.controller('DatepickerDemoCtrl', function ($scope) {
-  $scope.today = function() {
-    $scope.dt = new Date();
+app.controller("appCtrl", ["$scope","$http","$location",function($scope,$http,$location){
+  
+
+  $http.get('./phones.json').then(successCallback, errorCallback);
+
+  function successCallback(response){
+    $scope.phones = response.data;
   };
-  $scope.today();
 
-  $scope.clear = function() {
-    $scope.dt = null;
-  };
-
-  $scope.options = {
-    customClass: getDayClass,
-    minDate: new Date(),
-    showWeeks: false
+  function errorCallback(error){
+    console.log(error);
   };
   
-  $scope.period = {
-    value: 5,
-    date: new Date()
-  }
+}]);
 
-  var Arr = [];
-  for(var i = 0; i < $scope.period.value; ++i){
-    $scope.period.date.setDate($scope.period.date.getDate() + 1);
-    Arr.push({date: $scope.period.date + 1, status: 'partially'});
-  }
+app.controller("aboutCtrl", ["$scope","$http","$location",function($scope,$http,$location){
+}]);
+app.controller("servicesCtrl", ["$scope","$http","$location",function($scope,$http,$location){
+}]);
+app.controller("contactCtrl", ["$scope","$http","$location",function($scope,$http,$location){
+}]);
+app.controller("phoneCtrl", ["$scope","$http","$location", "$routeParams",function($scope,$http,$location,$routeParams){
+    $scope.phoneId = $routeParams.phoneId;
 
-  $scope.events = Arr;
+    $http.get('./phones.json').then(successCallback, errorCallback);
 
-  function getDayClass(data) {
-    var date = data.date,
-      mode = data.mode;
-    if (mode === 'day') {
-      var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-      for (var i = 0; i < $scope.events.length; i++) {
-        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-        if (dayToCheck === currentDay) {
-          return $scope.events[i].status;
+    function successCallback(response){
+      
+      _.map(response.data, function(arr){
+        
+        if(arr.id === $routeParams.phoneId){
+          $scope.phone = arr;
         }
-      }
-    }
 
-    return '';
-  }
-});
+      })
+
+    };
+
+    function errorCallback(error){
+      console.log(error);
+    };
+}]);

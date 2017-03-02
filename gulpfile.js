@@ -43,6 +43,16 @@ gulp.task('compile-html', function () {
         .pipe(gulp.dest('./public'));
 });
 
+gulp.task('compile-json', function () {
+    return gulp.src(['./front/*.json'])
+        .pipe(gulp.dest('./public'));
+});
+
+gulp.task('compile-img', function () {
+    return gulp.src(['./front/img/phones/*.jpg'])
+        .pipe(gulp.dest('./public/img/phones'));
+});
+
 gulp.task('compile-fonts', function () {
     return gulp.src(['./bower_components/bootstrap/dist/fonts/*'])
         .pipe(gulp.dest('./public/fonts'));
@@ -70,7 +80,9 @@ gulp.task('build', [
     'vendor-js',
     'vendor-css',
     'compile-html',
-    'compile-fonts'
+    'compile-fonts',
+    'compile-json',
+    'compile-img'
 ]);
 
 gulp.task('default', [
