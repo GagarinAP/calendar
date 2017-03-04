@@ -44,13 +44,9 @@ gulp.task('compile-html', function () {
 });
 
 gulp.task('compile-json', function () {
-    return gulp.src(['./front/*.json'])
-        .pipe(gulp.dest('./public'));
-});
-
-gulp.task('compile-img', function () {
-    return gulp.src(['./front/img/phones/*.jpg'])
-        .pipe(gulp.dest('./public/img/phones'));
+    return gulp.src(['./front/json/*.json'])
+        .pipe(concat('todo.json'))
+        .pipe(gulp.dest('./public/json'));
 });
 
 gulp.task('compile-fonts', function () {
@@ -60,7 +56,7 @@ gulp.task('compile-fonts', function () {
 
 gulp.task('compile-js', function () {
     return gulp.src([
-        './front/**/*.js'
+        './front/js/*.js'
     ])
         .pipe(concat('bundle.js'))
         .pipe(gulp.dest("./public/js"))
@@ -68,10 +64,8 @@ gulp.task('compile-js', function () {
 
 gulp.task('watch', function () {
     return gulp.watch('./front/**/**', [
-        'compile-js',
-        'vendor-js',
-        'vendor-css',
-        'compile-html'
+        'compile-js',        
+        'compile-html'        
     ]);
 });
 
@@ -81,8 +75,7 @@ gulp.task('build', [
     'vendor-css',
     'compile-html',
     'compile-fonts',
-    'compile-json',
-    'compile-img'
+    'compile-json'    
 ]);
 
 gulp.task('default', [
