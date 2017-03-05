@@ -39,7 +39,7 @@ gulp.task('vendor-css', function () {
 });
 
 gulp.task('compile-html', function () {
-    return gulp.src(['./front/html/*'])
+    return gulp.src(['./front/html/**/**'])
         .pipe(gulp.dest('./public'));
 });
 

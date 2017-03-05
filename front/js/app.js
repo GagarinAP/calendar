@@ -3,10 +3,25 @@ var app = angular.module("app", [
   "ui.bootstrap",
   "ngResource"
 ]);
+//=========config============
+app.config(["$routeProvider","$locationProvider", function($routeProvider,$locationProvider){
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
+  $routeProvider
+  .when("/checkout", {
+    templateUrl: "/view/checkoutSummary.html"
+  }).when("/products", {
+    templateUrl: "/view/productList.html"
+  }).otherwise({
+    templateUrl: "/view/productList.html"
+  });
+}]);
 //=========const=============
 app.constant("productListActiveClass", "btn-primary");
 app.constant("productListPageCount", 3);
-app.constant("dataUrl", "http://localhost:3000/products");
+app.constant("dataUrl", "http://localhost:3000/allproducts");
 //=========ctrl============
 app.controller("sportsStoreCtrl", function ($scope,$http,dataUrl) { 
   $scope.data = {};  
@@ -18,7 +33,7 @@ app.controller("sportsStoreCtrl", function ($scope,$http,dataUrl) {
     $scope.data.error = error;
   };
 });
-app.controller("productListCtrl", function ($scope, $filter, productListActiveClass, productListPageCount) { 
+app.controller("productListCtrl", function ($scope, $filter, productListActiveClass, productListPageCount, cart) { 
   var selectedCategory = null;
   $scope.selectedPage = 1;
   $scope.pageSize = productListPageCount;   
@@ -37,6 +52,9 @@ app.controller("productListCtrl", function ($scope, $filter, productListActiveCl
   }
   $scope.getPageClass = function (page) {
     return $scope.selectedPage == page ? productListActiveClass : "";
+  }
+  $scope.addProductToCart = function (product) {
+    cart.addProduct(product.id, product.name, product.price);
   }
 });
 //============filters=============
