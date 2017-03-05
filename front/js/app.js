@@ -12,10 +12,11 @@ app.controller("sportsStoreCtrl", function ($scope,$http,dataUrl) {
   $scope.data = {};  
   $http.get(dataUrl).then(good,bad);
   function good(response) {
-    console.log(response.data);
+    //console.log(response.data);
     $scope.data.products = response.data;
   };
   function bad(error) {
+    //console.log(error);
     $scope.data.error = error;
   };
 });
