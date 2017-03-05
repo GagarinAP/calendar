@@ -1,6 +1,14 @@
 [
-	{ "action": "Buy Flowers", "done": false },
-    { "action": "Get Shoes", "done": false },
-    { "action": "Collect Tickets", "done": true },
-    { "action": "Call Joe", "done": false }
+    { "name": "Product #1", "description": "A product", "category": "Category #1", "price": 100 },
+    { "name": "Product #2", "description": "A product", "category": "Category #1", "price": 110 },
+    { "name": "Product #3", "description": "A product", "category": "Category #2", "price": 210 },
+    { "name": "Product #4", "description": "A product", "category": "Category #3", "price": 202 },
+    { "name": "Product #5", "description": "A product", "category": "Category #1", "price": 170 },
+    { "name": "Product #6", "description": "A product", "category": "Category #1", "price": 170 },
+    { "name": "Product #7", "description": "A product", "category": "Category #2", "price": 270 },
+    { "name": "Product #8", "description": "A product", "category": "Category #3", "price": 272 },
+    { "name": "Product #9", "description": "A product", "category": "Category #1", "price": 170 },
+    { "name": "Product #10", "description": "A product", "category": "Category #1", "price": 170 },
+    { "name": "Product #11", "description": "A product", "category": "Category #2", "price": 270 },
+    { "name": "Product #12", "description": "A product", "category": "Category #3", "price": 272 }
 ]
