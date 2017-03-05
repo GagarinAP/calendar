@@ -19,6 +19,10 @@ app.get('/allproducts', function(req,res){
 	res.json(JSON);
 });
 
+app.post('/orders', function(req,res){	
+	console.log(req.params,req.query);
+});
+
 app.listen(3000, function(){
 	console.log('Server run in 3000 port!');
 });

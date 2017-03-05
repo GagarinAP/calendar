@@ -10,11 +10,19 @@ app.config(["$routeProvider","$locationProvider", function($routeProvider,$locat
     requireBase: false
   });
   $routeProvider
+  .when("/complete", {
+    templateUrl: "/view/thankYou.html"
+  })   
+  .when("/placeorder", {
+    templateUrl: "/view/placeOrder.html"
+  })
   .when("/checkout", {
     templateUrl: "/view/checkoutSummary.html"
-  }).when("/products", {
+  })
+  .when("/products", {
     templateUrl: "/view/productList.html"
-  }).otherwise({
+  })
+  .otherwise({
     templateUrl: "/view/productList.html"
   });
 }]);
@@ -22,16 +30,37 @@ app.config(["$routeProvider","$locationProvider", function($routeProvider,$locat
 app.constant("productListActiveClass", "btn-primary");
 app.constant("productListPageCount", 3);
 app.constant("dataUrl", "http://localhost:3000/allproducts");
+app.constant("orderUrl", "http://localhost:3000/orders");
 //=========ctrl============
-app.controller("sportsStoreCtrl", function ($scope,$http,dataUrl) { 
+app.controller("sportsStoreCtrl", function ($scope,$http,dataUrl,orderUrl,$location,cart) { 
   $scope.data = {};  
-  $http.get(dataUrl).then(good,bad);
-  function good(response) {
-    $scope.data.products = response.data;
-  };
-  function bad(error) {
+  $http({
+    method: 'GET',
+    url: dataUrl
+  }).then(function (success){
+    //console.log(success.data);
+    $scope.data.products = success.data;
+  },function(error){
     $scope.data.error = error;
-  };
+  });  
+
+  $scope.sendOrder = function (shippingDetails) {
+    var order = angular.copy(shippingDetails);
+    order.products = cart.getProducts();    
+
+    $http({
+      method: 'POST',
+      url: orderUrl
+    }).then(function (success){
+      console.log(order.products);//!!!!!!!!!!!!!!!!!
+      $scope.data.orderId = success.data.id;
+      cart.getProducts().length = 0;
+    },function (error){
+      $scope.data.orderError = error;
+    }).finally(function () {
+      $location.path("/complete");
+    });
+  }
 });
 app.controller("productListCtrl", function ($scope, $filter, productListActiveClass, productListPageCount, cart) { 
   var selectedCategory = null;
@@ -55,6 +84,19 @@ app.controller("productListCtrl", function ($scope, $filter, productListActiveCl
   }
   $scope.addProductToCart = function (product) {
     cart.addProduct(product.id, product.name, product.price);
+  }
+});
+app.controller("cartSummaryController", function($scope, cart) { 
+  $scope.cartData = cart.getProducts();   
+  $scope.total = function () {
+    var total = 0;
+    for (var i = 0; i < $scope.cartData.length; i++) {
+      total += ($scope.cartData[i].price * $scope.cartData[i].count);
+    }
+    return total;
+  }   
+  $scope.remove = function (id) {
+    cart.removeProduct(id);
   }
 });
 //============filters=============
