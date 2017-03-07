@@ -38,7 +38,6 @@ app.controller("sportsStoreCtrl", function ($scope,$http,dataUrl,orderUrl,$locat
     method: 'GET',
     url: dataUrl
   }).then(function (success){
-    //console.log(success.data);
     $scope.data.products = success.data;
   },function(error){
     $scope.data.error = error;
@@ -47,12 +46,13 @@ app.controller("sportsStoreCtrl", function ($scope,$http,dataUrl,orderUrl,$locat
   $scope.sendOrder = function (shippingDetails) {
     var order = angular.copy(shippingDetails);
     order.products = cart.getProducts();    
-
+    console.log(order);
     $http({
       method: 'POST',
-      url: orderUrl
-    }).then(function (success){
-      console.log(order.products);//!!!!!!!!!!!!!!!!!
+      url: orderUrl,
+      data: order,
+      headers: {'Content-Type': 'application/json'}
+    }).then(function (success){      
       $scope.data.orderId = success.data.id;
       cart.getProducts().length = 0;
     },function (error){

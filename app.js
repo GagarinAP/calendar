@@ -17,9 +17,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //MongoBD Database
-///////////////////////////////////////////////
-mongoose.connect('mongodb://localhost/Orders');
-
+mongoose.connect('mongodb://localhost/Items');
 var OrdersSchema = new mongoose.Schema({
   name: String,
   street: String,
@@ -30,18 +28,18 @@ var OrdersSchema = new mongoose.Schema({
   giftwrap: Boolean,
   products: Array,
 });
-
-var Orders = mongoose.model('Orders', OrdersSchema);
-
-mongoose.connect('mongodb://localhost/Products');
-
 var ProductsSchema = new mongoose.Schema({
   name: String,
   description: String,
   category: String,
   price: Number,
 });
-
+var UsersSchema = new mongoose.Schema({
+  username: String,
+  password: String,
+});
+var Orders = mongoose.model('Orders', OrdersSchema);
+var Users = mongoose.model('Orders', UsersSchema);
 var Products = mongoose.model('Products', ProductsSchema);
 
 
@@ -57,6 +55,34 @@ app.get('/allproducts', function(req,res){
 app.post('/allproducts', function(req,res){
 	console.log(req.body);		
 	Products.create(req.body, function (err, product) {
+	    if (err) {
+	    	console.log(err);
+	    }
+	    res.json(product);
+	});
+});
+
+app.get('/users', function(req,res){		
+	Users.find(function (err, users) {
+	    if (err) {
+	    	console.log(err);
+	    }
+	    res.json(users);
+	});
+});
+
+app.post('/users', function(req,res){
+	console.log(req.body);		
+	Users.create(req.body, function (err, user) {
+	    if (err) {
+	    	console.log(err);
+	    }
+	    res.json(user);
+	});
+});
+
+app.get('/orders', function(req,res){	
+	Orders.find(function (err, product) {
 	    if (err) {
 	    	console.log(err);
 	    }
